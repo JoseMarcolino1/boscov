@@ -5,6 +5,7 @@ import com.boscov.avaliadorFilmes.models.dto.FilmeInput;
 import com.boscov.avaliadorFilmes.models.dto.FilmeOutput;
 import com.boscov.avaliadorFilmes.services.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,12 +23,18 @@ public class FilmeController {
     }
 
     @GetMapping("/all")
-    public List<Filme> listar() {
-        return filmeService.listarTodos();
+    public ResponseEntity<List<FilmeOutput>> listar() {
+        return ResponseEntity.ok(filmeService.listarTodos());
     }
 
+
     @GetMapping("/{id}")
-    public Filme buscarPorId(@PathVariable Long id) {
-        return filmeService.buscarPorId(id);
+    public ResponseEntity<FilmeOutput> buscarPorId(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(filmeService.buscarPorId(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
+
 }

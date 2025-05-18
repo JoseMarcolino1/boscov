@@ -1,5 +1,6 @@
 package com.boscov.avaliadorFilmes.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,8 +15,5 @@ public class Genero {
     private Long id;
 
     private String descricao;
-
-    @ManyToMany(mappedBy = "generos")
-    private Set<Filme> filmes;
 }
 

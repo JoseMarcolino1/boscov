@@ -18,10 +18,6 @@ public class Filme {
 
     @Column(name = "ano_lancamento")
     private Integer anoLancamento;
-
-    @Column(name = "genero_id")
-    private Long generoId;
-
     private Integer duracao;
     private String produtora;
     private String classificacao;
