@@ -4,6 +4,8 @@ import com.boscov.avaliadorFilmes.models.Usuario;
 import com.boscov.avaliadorFilmes.models.dto.UsuarioInput;
 import com.boscov.avaliadorFilmes.models.dto.UsuarioOutput;
 import com.boscov.avaliadorFilmes.repositories.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,16 +13,19 @@ import java.time.LocalDateTime;
 @Service
 public class UsuarioService {
 
-    private final UsuarioRepository usuarioRepository;
 
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder encoder;
+
+    public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder encoder) {
         this.usuarioRepository = usuarioRepository;
+        this.encoder = encoder;
     }
 
     public UsuarioOutput criar(UsuarioInput input) {
         Usuario usuario = new Usuario();
         usuario.setNome(input.nome);
-        usuario.setSenha(input.senha);
+        usuario.setSenha(encoder.encode(input.senha));
         usuario.setEmail(input.email);
         usuario.setStatus(true);
         usuario.setApelido(input.apelido);
