@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14.5
+    container_name: postgres_filmes
+    environment:
+      POSTGRES_DB: boscov
+      POSTGRES_USER: josea
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+  flyway:
+    image: flyway/flyway:latest
+    depends_on:
+      - postgres
+    volumes:
+      - ./src/main/resources/db/migration:/flyway/sql
+    entrypoint: [ "/bin/sh", "-c", "sleep 10 && flyway -url=jdbc:postgresql://postgres:5432/boscov -user=josea -password=1234 migrate" ]
+    networks:
+      - backend-network
+
+
+
+  app:
+    build: .
+    container_name: boscov
+    depends_on:
+      - flyway
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/boscov
+      SPRING_DATASOURCE_USERNAME: josea
+      SPRING_DATASOURCE_PASSWORD: 1234
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_FLYWAY_ENABLED: "false"
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+
+networks:
+  backend-network:
