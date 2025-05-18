@@ -21,7 +21,7 @@ public class FilmeController {
         return filmeService.salvar(input);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Filme> listar() {
         return filmeService.listarTodos();
     }

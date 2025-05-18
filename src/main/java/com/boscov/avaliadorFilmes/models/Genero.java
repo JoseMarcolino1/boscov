@@ -1,10 +1,12 @@
 package com.boscov.avaliadorFilmes.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Set;
 
 @Entity
+@Data
 public class Genero {
 
     @Id
