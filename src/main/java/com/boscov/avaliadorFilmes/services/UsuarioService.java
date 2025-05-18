@@ -6,7 +6,6 @@ import com.boscov.avaliadorFilmes.models.dto.UsuarioOutput;
 import com.boscov.avaliadorFilmes.repositories.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -23,7 +22,7 @@ public class UsuarioService {
         usuario.setNome(input.nome);
         usuario.setSenha(input.senha);
         usuario.setEmail(input.email);
-        usuario.setStatus(input.status);
+        usuario.setStatus(true);
         usuario.setApelido(input.apelido);
         usuario.setDataNascimento(input.dataNascimento);
         usuario.setTipoUsuario(input.tipoUsuario);
@@ -33,13 +32,13 @@ public class UsuarioService {
         usuario = usuarioRepository.save(usuario);
 
         UsuarioOutput output = new UsuarioOutput();
-        output.id = usuario.getId();
-        output.nome = usuario.getNome();
-        output.email = usuario.getEmail();
-        output.apelido = usuario.getApelido();
-        output.status = usuario.getStatus();
-        output.dataCriacao = usuario.getDataCriacao();
-        output.dataAtualizacao = usuario.getDataAtualizacao();
+        output.setId(usuario.getId());
+        output.setNome(usuario.getNome());
+        output.setEmail(usuario.getEmail());
+        output.setApelido(usuario.getApelido());
+        output.setStatus(usuario.getStatus());
+        output.setDataCriacao(usuario.getDataCriacao());
+        output.setDataAtualizacao(usuario.getDataAtualizacao());
 
         return output;
     }

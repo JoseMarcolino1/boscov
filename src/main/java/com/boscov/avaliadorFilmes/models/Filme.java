@@ -3,7 +3,6 @@ package com.boscov.avaliadorFilmes.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.Year;
 import java.util.Set;
 
 @Entity
@@ -18,7 +17,7 @@ public class Filme {
     private String diretor;
 
     @Column(name = "ano_lancamento")
-    private Year anoLancamento;
+    private Integer anoLancamento;
 
     @Column(name = "genero_id")
     private Long generoId;

@@ -3,7 +3,7 @@ CREATE TABLE usuario (
     nome VARCHAR(255),
     senha VARCHAR(255),
     email VARCHAR(255),
-    status VARCHAR(50),
+    status BOOLEAN DEFAULT TRUE,
     apelido VARCHAR(100),
     data_nascimento DATE,
     data_criacao TIMESTAMP,

@@ -16,7 +16,7 @@ public class FilmeController {
     @Autowired
     private FilmeService filmeService;
 
-    @PostMapping
+    @PostMapping("/save")
     public FilmeOutput criar(@RequestBody FilmeInput input) {
         return filmeService.salvar(input);
     }

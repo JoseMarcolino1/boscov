@@ -1,14 +1,16 @@
 package com.boscov.avaliadorFilmes.models.dto;
 
-import java.time.LocalDate;
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class UsuarioOutput {
-    public Long id;
-    public String nome;
-    public String email;
-    public String apelido;
-    public String status;
-    public LocalDateTime dataCriacao;
-    public LocalDateTime dataAtualizacao;
+    private Long id;
+    private String nome;
+    private String email;
+    private String apelido;
+    private Boolean status; // Agora boolean
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataAtualizacao;
 }

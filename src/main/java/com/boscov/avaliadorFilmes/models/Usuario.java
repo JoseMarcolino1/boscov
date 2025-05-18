@@ -6,6 +6,7 @@ import lombok.Data;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+
 @Entity
 @Data
 public class Usuario {
@@ -17,7 +18,8 @@ public class Usuario {
     private String nome;
     private String senha;
     private String email;
-    private String status;
+
+    private Boolean status = true; // padrão ativo
     private String apelido;
 
     @Column(name = "data_nascimento")
