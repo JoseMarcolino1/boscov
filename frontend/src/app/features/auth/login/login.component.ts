@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.component.html'
+  templateUrl: './login.component.html',
 })
 export class LoginComponent {
   form: FormGroup;
@@ -17,7 +17,7 @@ export class LoginComponent {
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      senha: ['', Validators.required]
+      senha: ['', Validators.required],
     });
   }
 
@@ -28,7 +28,10 @@ export class LoginComponent {
           this.auth.saveToken(res.token);
           this.router.navigate(['/']);
         },
-        error: () => alert('Email ou senha inválidos')
+        error: (err) => {
+          console.error('Erro na requisição de login:', err);
+          alert('Email ou senha inválidos');
+        },
       });
     }
   }
