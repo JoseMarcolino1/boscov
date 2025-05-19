@@ -47,4 +47,9 @@ public class UsuarioService {
 
         return output;
     }
+
+    public void deletar(Long id) {
+        usuarioRepository.deleteById(id);
+    }
+
 }

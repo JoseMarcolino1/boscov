@@ -3,10 +3,7 @@ package com.boscov.avaliadorFilmes.controllers;
 import com.boscov.avaliadorFilmes.models.dto.UsuarioInput;
 import com.boscov.avaliadorFilmes.models.dto.UsuarioOutput;
 import com.boscov.avaliadorFilmes.services.UsuarioService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -22,4 +19,10 @@ public class UsuarioController {
     public UsuarioOutput criarUsuario(@RequestBody UsuarioInput input) {
         return usuarioService.criar(input);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deletarUsuario(@PathVariable Long id) {
+        usuarioService.deletar(id);
+    }
+
 }

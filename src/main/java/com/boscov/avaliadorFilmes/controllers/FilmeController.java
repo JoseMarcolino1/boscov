@@ -6,6 +6,7 @@ import com.boscov.avaliadorFilmes.models.dto.FilmeOutput;
 import com.boscov.avaliadorFilmes.services.FilmeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,11 +18,13 @@ public class FilmeController {
     @Autowired
     private FilmeService filmeService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/save")
     public FilmeOutput criar(@RequestBody FilmeInput input) {
         return filmeService.salvar(input);
     }
 
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<FilmeOutput>> listar() {
         return ResponseEntity.ok(filmeService.listarTodos());
