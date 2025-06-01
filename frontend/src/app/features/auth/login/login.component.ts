@@ -24,12 +24,13 @@ export class LoginComponent {
   login() {
     if (this.form.valid) {
       this.auth.login(this.form.value).subscribe({
-        next: (res: any) => {
+        next: (res) => {
+          console.log('Resposta do login:', res);
           this.auth.saveToken(res.token);
-          this.router.navigate(['/']);
+          this.router.navigate(['/filmes']);
         },
         error: (err) => {
-          console.error('Erro na requisição de login:', err);
+          console.error('Erro no login:', err);
           alert('Email ou senha inválidos');
         },
       });

@@ -6,14 +6,39 @@
       *ngFor="let filme of filmes"
       class="bg-gray-800 p-4 rounded shadow hover:shadow-lg transition"
     >
-      <h2 class="text-xl font-semibold">{{ filme.titulo }}</h2>
-      <p class="text-gray-400 text-sm">{{ filme.descricao }}</p>
+      <h2 class="text-xl font-semibold">{{ filme.nome }}</h2>
+
+      <p class="text-gray-400 text-sm">
+        <strong>Diretor:</strong> {{ filme.diretor || 'Desconhecido' }}
+      </p>
+
+      <p class="text-gray-400 text-sm">
+        <strong>Ano:</strong> {{ filme.anoLancamento || 'Desconhecido' }}
+      </p>
+
       <p class="mt-2">
         <strong>Gêneros:</strong>
         {{ getGeneros(filme) }}
       </p>
 
-      <p><strong>Avaliação:</strong> {{ filme.notaMedia || "N/A" }}</p>
+      <p>
+        <strong>Duração:</strong> {{ filme.duracao || 'N/A' }} min
+      </p>
+
+      <p>
+        <strong>Produtora:</strong> {{ filme.produtora || 'Desconhecida' }}
+      </p>
+
+      <p>
+        <strong>Classificação:</strong> {{ filme.classificacao || 'N/A' }}
+      </p>
+
+      <img
+        *ngIf="filme.poster"
+        [src]="filme.poster"
+        alt="Poster de {{ filme.poster }}"
+        class="mt-4 rounded shadow"
+      />
     </div>
   </div>
 </div>
