@@ -32,6 +32,7 @@ public class AuthController {
 
         String token = jwtUtil.gerarToken(usuario.getEmail(), usuario.getTipoUsuario());
 
-        return ResponseEntity.ok().body(token);
+        return ResponseEntity.ok(new TokenResponse(token));
     }
+
 }
