@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -51,7 +51,13 @@ export class AuthService {
     return decoded?.sub || null;
   }
 
-  saveUserInfo(usuario: UsuarioOutput) {
-    localStorage.setItem('usuarioNome', usuario.nome);
+  getUsuarioLogado() {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    return this.http.get<UsuarioOutput>(`${this.API}/usuarios/me`, {
+      headers,
+    });
   }
 }

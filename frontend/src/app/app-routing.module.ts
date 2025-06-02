@@ -7,17 +7,22 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () =>
-      import('./features/auth/auth.module').then(m => m.AuthModule)
+      import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
-   {
+  {
     path: 'filmes',
     loadChildren: () =>
-      import('./features/filmes/filme/filme.module').then(m => m.FilmeModule)
-  }
+      import('./features/filmes/filme/filme.module').then((m) => m.FilmeModule),
+  },
+  {
+    path: 'perfil',
+    loadChildren: () =>
+      import('./features/perfil/perfil.module').then((m) => m.PerfilModule),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

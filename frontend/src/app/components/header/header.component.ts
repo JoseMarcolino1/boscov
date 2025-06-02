@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -8,7 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
   usuarioNome: string | null = '';
 
-  ngOnInit() {
-    this.usuarioNome = localStorage.getItem('usuarioNome');
+  constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.authService.getUsuarioLogado().subscribe({
+      next: (usuario) => {
+        this.usuarioNome = usuario.nome;
+        localStorage.setItem('usuarioApelido', usuario.apelido || '');
+      },
+      error: (err) => {
+        console.error('Erro ao obter usuário logado:', err);
+        this.usuarioNome = 'Usuário';
+      },
+    });
   }
 }
