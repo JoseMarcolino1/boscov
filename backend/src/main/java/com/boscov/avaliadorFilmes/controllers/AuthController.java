@@ -2,6 +2,7 @@ package com.boscov.avaliadorFilmes.controllers;
 
 import com.boscov.avaliadorFilmes.models.Usuario;
 import com.boscov.avaliadorFilmes.models.dto.LoginInput;
+import com.boscov.avaliadorFilmes.models.dto.TokenResponse;
 import com.boscov.avaliadorFilmes.repositories.UsuarioRepository;
 import com.boscov.avaliadorFilmes.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;

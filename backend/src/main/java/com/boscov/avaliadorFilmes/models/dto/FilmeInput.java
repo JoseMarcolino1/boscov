@@ -3,7 +3,7 @@ package com.boscov.avaliadorFilmes.models.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Set;
+import java.util.List;
 
 
 @Getter
@@ -12,7 +12,7 @@ public class FilmeInput {
     private String nome;
     private String diretor;
     private Integer anoLancamento;
-    private Set<Long> generos;
+    private List<Long> generosIds; // IDs dos gêneros selecionados
     private Integer duracao;
     private String produtora;
     private String classificacao;

@@ -10,7 +10,7 @@ public class UsuarioOutput {
     private String nome;
     private String email;
     private String apelido;
-    private Boolean status; // Agora boolean
+    private Boolean status;
     private LocalDateTime dataCriacao;
     private LocalDateTime dataAtualizacao;
 }

@@ -23,15 +23,6 @@ public class FilmeService {
     private GeneroRepository generoRepository;
 
     public FilmeOutput salvar(FilmeInput input) {
-        // Buscar os gêneros pelos IDs fornecidos
-        Set<Genero> generos = new HashSet<>();
-        for (Long generoId : input.getGeneros()) {
-            Genero genero = generoRepository.findById(generoId)
-                    .orElseThrow(() -> new RuntimeException("Gênero não encontrado: " + generoId));
-            generos.add(genero);
-        }
-
-        // Criar o filme
         Filme filme = new Filme();
         filme.setNome(input.getNome());
         filme.setDiretor(input.getDiretor());
@@ -40,11 +31,13 @@ public class FilmeService {
         filme.setProdutora(input.getProdutora());
         filme.setClassificacao(input.getClassificacao());
         filme.setPoster(input.getPoster());
-        filme.setGeneros(generos);
+        if (input.getGenerosIds() != null && !input.getGenerosIds().isEmpty()) {
+            List<Genero> generos = generoRepository.findAllById(input.getGenerosIds());
+            filme.setGeneros(new HashSet<>(generos));
+        }
 
         Filme salvo = filmeRepository.save(filme);
 
-        // Criar o output
         FilmeOutput output = new FilmeOutput();
         output.setId(salvo.getId());
         output.setNome(salvo.getNome());
@@ -55,18 +48,21 @@ public class FilmeService {
         output.setClassificacao(salvo.getClassificacao());
         output.setPoster(salvo.getPoster());
 
-        // Preencher os gêneros no output
-        Set<GeneroOutput> generosOutput = salvo.getGeneros().stream().map(genero -> {
-            GeneroOutput go = new GeneroOutput();
-            go.setId(genero.getId());
-            go.setDescricao(genero.getDescricao());
-            return go;
-        }).collect(Collectors.toSet());
-
+        Set<GeneroOutput> generosOutput = salvo.getGeneros().stream()
+                .map(this::mapearGenero)
+                .collect(Collectors.toSet());
         output.setGeneros(generosOutput);
 
         return output;
     }
+
+    public void deletar(Long id) {
+        if (!filmeRepository.existsById(id)) {
+            throw new RuntimeException("Filme não encontrado");
+        }
+        filmeRepository.deleteById(id);
+    }
+
 
     public List<FilmeOutput> listarTodos() {
         return filmeRepository.findAll().stream().map(filme -> {
@@ -119,5 +115,50 @@ public class FilmeService {
 
         return output;
     }
+
+    public FilmeOutput atualizar(Long id, FilmeInput input) {
+        Filme filme = filmeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
+
+        filme.setNome(input.getNome());
+        filme.setDiretor(input.getDiretor());
+        filme.setAnoLancamento(input.getAnoLancamento());
+        filme.setDuracao(input.getDuracao());
+        filme.setProdutora(input.getProdutora());
+        filme.setClassificacao(input.getClassificacao());
+        filme.setPoster(input.getPoster());
+
+        // 🔥 Atualizando generos se tiver IDs no input
+        if (input.getGenerosIds() != null && !input.getGenerosIds().isEmpty()) {
+            List<Genero> generos = generoRepository.findAllById(input.getGenerosIds());
+            filme.setGeneros(new HashSet<>(generos));
+        }
+        Filme atualizado = filmeRepository.save(filme);
+
+        // 🔧 Mapeando para DTO de saída
+        FilmeOutput output = new FilmeOutput();
+        output.setId(atualizado.getId());
+        output.setNome(atualizado.getNome());
+        output.setDiretor(atualizado.getDiretor());
+        output.setAnoLancamento(atualizado.getAnoLancamento());
+        output.setDuracao(atualizado.getDuracao());
+        output.setProdutora(atualizado.getProdutora());
+        output.setClassificacao(atualizado.getClassificacao());
+        output.setPoster(atualizado.getPoster());
+
+        Set<GeneroOutput> generosOutput = atualizado.getGeneros().stream()
+                .map(this::mapearGenero)
+                .collect(Collectors.toSet());
+        output.setGeneros(generosOutput);
+        return output;
+    }
+
+    private GeneroOutput mapearGenero(Genero genero) {
+        GeneroOutput output = new GeneroOutput();
+        output.setId(genero.getId());
+        output.setDescricao(genero.getDescricao());
+        return output;
+    }
+
 
 }

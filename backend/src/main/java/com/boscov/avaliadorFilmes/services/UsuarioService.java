@@ -9,6 +9,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService {
@@ -23,6 +25,10 @@ public class UsuarioService {
     }
 
     public UsuarioOutput criar(UsuarioInput input) {
+        if (usuarioRepository.existsByEmail(input.getEmail())) {
+            throw new RuntimeException("Email já cadastrado!");
+        }
+
         Usuario usuario = new Usuario();
         usuario.setNome(input.nome);
         usuario.setSenha(encoder.encode(input.senha));
@@ -48,8 +54,29 @@ public class UsuarioService {
         return output;
     }
 
+
     public void deletar(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    public List<UsuarioOutput> listUsers() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream()
+                .map(this::mapearUsuarioParaOutput)
+                .collect(Collectors.toList());
+    }
+
+    private UsuarioOutput mapearUsuarioParaOutput(Usuario usuario) {
+        UsuarioOutput output = new UsuarioOutput();
+        output.setId(usuario.getId());
+        output.setNome(usuario.getNome());
+        output.setEmail(usuario.getEmail());
+        output.setApelido(usuario.getApelido());
+        output.setStatus(usuario.getStatus());
+        output.setDataAtualizacao(LocalDateTime.now());
+        return output;
+    }
+
+
 
 }
