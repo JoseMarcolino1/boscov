@@ -27,6 +27,8 @@ export class LoginComponent {
         next: (res) => {
           console.log('Resposta do login:', res);
           this.auth.saveToken(res.token);
+          this.auth.saveUserInfo(res.usuario);
+          console.log('Usuário autenticado:', res.usuario);
           this.router.navigate(['/filmes']);
         },
         error: (err) => {

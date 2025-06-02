@@ -4,17 +4,18 @@ import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { environment } from 'src/app/environment';
+import { UsuarioOutput } from 'src/app/interfaces/usuario';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private API = environment.apiUrl;
- private jwtHelper = new JwtHelperService();
+  private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(credentials: { email: string, senha: string }): Observable<any> {
+  login(credentials: { email: string; senha: string }): Observable<any> {
     return this.http.post(`${this.API}/login`, credentials);
   }
 
@@ -48,5 +49,9 @@ export class AuthService {
     if (!token) return null;
     const decoded = this.jwtHelper.decodeToken(token);
     return decoded?.sub || null;
+  }
+
+  saveUserInfo(usuario: UsuarioOutput) {
+    localStorage.setItem('usuarioNome', usuario.nome);
   }
 }
