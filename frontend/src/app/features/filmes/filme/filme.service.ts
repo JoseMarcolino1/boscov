@@ -28,7 +28,7 @@ export class FilmeService {
       Authorization: `Bearer ${token}`,
     });
 
-    return this.http.post<FilmeOutput>(this.API, filme, { headers });
+    return this.http.post<FilmeOutput>(`${this.API}/save`, filme, { headers });
   }
 
 }
