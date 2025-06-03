@@ -4,7 +4,7 @@ import { UsuarioCreateComponent } from '../usuario-create/usuario-create.compone
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'register',
     component: UsuarioCreateComponent,
   }
 ];
