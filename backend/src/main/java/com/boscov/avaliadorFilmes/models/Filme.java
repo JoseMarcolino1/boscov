@@ -21,6 +21,7 @@ public class Filme {
     private Integer duracao;
     private String produtora;
     private String classificacao;
+    @Column(length = 1000)
     private String poster;
     @ManyToMany
     @JoinTable(

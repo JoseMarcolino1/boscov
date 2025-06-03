@@ -120,19 +120,34 @@ public class FilmeService {
         Filme filme = filmeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Filme não encontrado"));
 
-        filme.setNome(input.getNome());
-        filme.setDiretor(input.getDiretor());
-        filme.setAnoLancamento(input.getAnoLancamento());
-        filme.setDuracao(input.getDuracao());
-        filme.setProdutora(input.getProdutora());
-        filme.setClassificacao(input.getClassificacao());
-        filme.setPoster(input.getPoster());
+        if (input.getNome() != null) {
+            filme.setNome(input.getNome());
+        }
+        if (input.getDiretor() != null) {
+            filme.setDiretor(input.getDiretor());
+        }
+        if (input.getAnoLancamento() != null) {
+            filme.setAnoLancamento(input.getAnoLancamento());
+        }
+        if (input.getDuracao() != null) {
+            filme.setDuracao(input.getDuracao());
+        }
+        if (input.getProdutora() != null) {
+            filme.setProdutora(input.getProdutora());
+        }
+        if (input.getClassificacao() != null) {
+            filme.setClassificacao(input.getClassificacao());
+        }
+        if (input.getPoster() != null) {
+            filme.setPoster(input.getPoster());
+        }
 
         // 🔥 Atualizando generos se tiver IDs no input
         if (input.getGenerosIds() != null && !input.getGenerosIds().isEmpty()) {
             List<Genero> generos = generoRepository.findAllById(input.getGenerosIds());
             filme.setGeneros(new HashSet<>(generos));
         }
+
         Filme atualizado = filmeRepository.save(filme);
 
         // 🔧 Mapeando para DTO de saída
@@ -150,8 +165,10 @@ public class FilmeService {
                 .map(this::mapearGenero)
                 .collect(Collectors.toSet());
         output.setGeneros(generosOutput);
+
         return output;
     }
+
 
     private GeneroOutput mapearGenero(Genero genero) {
         GeneroOutput output = new GeneroOutput();
