@@ -23,7 +23,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     public UsuarioOutput criarUsuario(@RequestBody UsuarioInput input) {
         return usuarioService.criar(input);
     }
