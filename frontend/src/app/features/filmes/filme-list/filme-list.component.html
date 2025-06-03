@@ -34,9 +34,12 @@
       <img
         *ngIf="filme.poster"
         [src]="filme.poster"
-        alt="Poster de {{ filme.poster }}"
-        class="mt-4 rounded shadow"
+        alt="Poster de {{ filme.nome }}"
+        class="mt-4 rounded shadow h-64 w-full object-cover"
       />
+
     </div>
+    <a routerLink="/filmes/create" class="btn bg-blue-600 text-white p-2 rounded">Novo Filme</a>
+
   </div>
 </div>

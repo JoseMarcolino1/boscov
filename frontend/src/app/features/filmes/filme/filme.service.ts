@@ -12,6 +12,7 @@ export class FilmeService {
 
   constructor(private http: HttpClient) {}
 
+
   getFilmes(): Observable<FilmeOutput[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -20,4 +21,14 @@ export class FilmeService {
 
     return this.http.get<FilmeOutput[]>(`${this.API}/all`, { headers });
   }
+
+  salvarFilme(filme: FilmeOutput): Observable<FilmeOutput> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+
+    return this.http.post<FilmeOutput>(this.API, filme, { headers });
+  }
+
 }

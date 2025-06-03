@@ -1,0 +1,93 @@
+<div class="min-h-screen bg-gray-900 text-white flex justify-center items-center p-4">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="salvar()"
+    class="bg-gray-800 p-6 rounded shadow w-full max-w-lg"
+  >
+    <h2 class="text-2xl font-bold mb-4 text-blue-400">Cadastrar Filme</h2>
+
+    <div class="mb-3">
+      <label class="block text-sm">Nome:</label>
+      <input
+        type="text"
+        formControlName="nome"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Diretor:</label>
+      <input
+        type="text"
+        formControlName="diretor"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Ano de lançamento:</label>
+      <input
+        type="number"
+        formControlName="anoLancamento"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Gêneros:</label>
+      <select
+        formControlName="generosIds"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+        multiple
+      >
+        <option *ngFor="let genero of generos" [value]="genero.id">
+          {{ genero.descricao }}
+        </option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Duração (minutos):</label>
+      <input
+        type="number"
+        formControlName="duracao"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Produtora:</label>
+      <input
+        type="text"
+        formControlName="produtora"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Classificação:</label>
+      <input
+        type="text"
+        formControlName="classificacao"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Pôster (URL):</label>
+      <input
+        type="url"
+        formControlName="poster"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="w-full p-2 bg-blue-600 rounded hover:bg-blue-700 transition"
+    >
+      Salvar
+    </button>
+  </form>
+</div>
