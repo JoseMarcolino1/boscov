@@ -18,7 +18,7 @@ public class GeneroController {
         this.generoService = generoService;
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     public ResponseEntity<GeneroOutput> criar(@RequestBody GeneroInput input) {
         return ResponseEntity.ok(generoService.salvar(input));
     }

@@ -20,7 +20,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, JwtFilter jwtFilter) throws Exception {
         http
-                .cors(c -> c.configurationSource(corsConfigurationSource())) // 🔥 nova forma recomendada
+                .cors(c -> c.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
@@ -32,6 +32,7 @@ public class SecurityConfig {
                                 "/usuarios/create",
                                 "/login"
                         ).permitAll()
+                        .requestMatchers("/usuarios/me").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

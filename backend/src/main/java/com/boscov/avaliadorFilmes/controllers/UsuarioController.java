@@ -43,7 +43,6 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
 
-        // 🔧 Mapeia para DTO de saída
         UsuarioOutput output = new UsuarioOutput();
         output.setId(usuario.getId());
         output.setNome(usuario.getNome());

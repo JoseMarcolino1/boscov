@@ -18,15 +18,26 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String gerarToken(String email, String tipoUsuario) {
+    public String gerarToken(Long id,String email, String tipoUsuario) {
         return Jwts.builder()
                 .setSubject(email)
+                .claim("id", id)
                 .claim("role", tipoUsuario)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRACAO))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
+    public Long extrairId(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("id", Long.class);
+    }
+
 
     public String extrairEmail(String token) {
         return Jwts.parserBuilder()

@@ -68,4 +68,54 @@ public class AvaliacaoService {
         output.setComentario(avaliacao.getComentario());
         return output;
     }
+
+    public List<AvaliacaoOutput> listarAvaliacoesDoUsuario(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado");
+        }
+
+        return avaliacaoRepository.findByUsuario(usuario).stream()
+                .map(this::criarOutput)
+                .collect(Collectors.toList());
+    }
+
+    public AvaliacaoOutput editarAvaliacaoDoUsuario(String emailUsuario, Long idFilme, AvaliacaoInput input) {
+        Usuario usuario = usuarioRepository.findByEmail(emailUsuario);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
+
+        // Busca a avaliação existente
+        Avaliacao avaliacaoExistente = avaliacaoRepository.findByUsuarioIdAndFilmeId(usuario.getId(), idFilme)
+                .orElseThrow(() -> new RuntimeException("Avaliação não encontrada para este usuário e filme."));
+
+        // Atualiza os dados
+        avaliacaoExistente.setNota(input.getNota());
+        avaliacaoExistente.setComentario(input.getComentario());
+
+        Avaliacao atualizada = avaliacaoRepository.save(avaliacaoExistente);
+
+        // Mapeia para output
+        AvaliacaoOutput output = new AvaliacaoOutput();
+        output.setIdUsuario(usuario.getId());
+        output.setNomeUsuario(usuario.getNome());
+        output.setIdFilme(avaliacaoExistente.getFilme().getId());
+        output.setNomeFilme(avaliacaoExistente.getFilme().getNome());
+        output.setNota(atualizada.getNota());
+        output.setComentario(atualizada.getComentario());
+
+        return output;
+    }
+
+    public AvaliacaoOutput getAvaliacaoDoUsuarioPorFilme(String email, Long idFilme) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        Avaliacao avaliacao = avaliacaoRepository.findByUsuarioIdAndFilmeId(usuario.getId(), idFilme)
+                .orElseThrow(() -> new RuntimeException("Avaliação não encontrada!"));
+
+        return criarOutput(avaliacao);
+    }
+
+
 }
