@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/auth/auth.guard';
 
 // Aqui vão as rotas principais da aplicação
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./features/home/home/home.module').then((m) => m.HomeModule),
+  },
   {
     path: 'login',
     loadChildren: () =>
@@ -13,16 +19,19 @@ const routes: Routes = [
     path: 'filmes',
     loadChildren: () =>
       import('./features/filmes/filme/filme.module').then((m) => m.FilmeModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'perfil',
     loadChildren: () =>
       import('./features/perfil/perfil.module').then((m) => m.PerfilModule),
+    canActivate: [AuthGuard],
   },
   {
     path: 'usuarios',
     loadChildren: () =>
       import('./features/usuarios/usuario/usuario.module').then((m) => m.UsuarioModule),
+    canActivate: [AuthGuard],
   }
 ];
 

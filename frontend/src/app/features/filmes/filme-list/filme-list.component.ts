@@ -38,4 +38,9 @@ export class FilmeListComponent {
     }
     return filme.generos.map((g) => g.descricao).join(', ');
   }
+
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token'); 
+  }
 }
