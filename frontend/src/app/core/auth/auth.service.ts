@@ -60,4 +60,11 @@ export class AuthService {
       headers,
     });
   }
+
+  getUserId(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+    const decoded = this.jwtHelper.decodeToken(token);
+    return decoded?.id || null;
+  }
 }

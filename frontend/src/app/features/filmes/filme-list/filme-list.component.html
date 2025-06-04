@@ -7,11 +7,11 @@
       <h2 class="text-xl font-semibold">{{ filme.nome }}</h2>
 
       <p class="text-gray-400 text-sm">
-        <strong>Diretor:</strong> {{ filme.diretor || 'Desconhecido' }}
+        <strong>Diretor:</strong> {{ filme.diretor || "Desconhecido" }}
       </p>
 
       <p class="text-gray-400 text-sm">
-        <strong>Ano:</strong> {{ filme.anoLancamento || 'Desconhecido' }}
+        <strong>Ano:</strong> {{ filme.anoLancamento || "Desconhecido" }}
       </p>
 
       <p class="mt-2">
@@ -19,17 +19,11 @@
         {{ getGeneros(filme) }}
       </p>
 
-      <p>
-        <strong>Duração:</strong> {{ filme.duracao || 'N/A' }} min
-      </p>
+      <p><strong>Duração:</strong> {{ filme.duracao || "N/A" }} min</p>
 
-      <p>
-        <strong>Produtora:</strong> {{ filme.produtora || 'Desconhecida' }}
-      </p>
+      <p><strong>Produtora:</strong> {{ filme.produtora || "Desconhecida" }}</p>
 
-      <p>
-        <strong>Classificação:</strong> {{ filme.classificacao || 'N/A' }}
-      </p>
+      <p><strong>Classificação:</strong> {{ filme.classificacao || "N/A" }}</p>
 
       <img
         *ngIf="filme.poster"
@@ -38,8 +32,21 @@
         class="mt-4 rounded shadow h-64 w-full object-cover"
       />
 
+      <div class="flex justify-end mt-4">
+        <a
+          *ngIf="isLoggedIn()"
+          [routerLink]="['/avaliacoes/create', filme.id]"
+          class="bg-green-600 text-white p-2 rounded hover:bg-green-700 transition"
+        >
+          Avaliar
+        </a>
+      </div>
     </div>
-    <a routerLink="/filmes/create" class="btn bg-blue-600 text-white p-2 rounded">Novo Filme</a>
-
+    <a
+      *ngIf="isAdmin()"
+      routerLink="/filmes/create"
+      class="btn bg-blue-600 text-white p-2 rounded"
+      >Novo Filme</a
+    >
   </div>
 </div>
