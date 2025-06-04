@@ -36,7 +36,13 @@ const routes: Routes = [
     path: 'generos',
     loadChildren: () =>
       import('./features/generos/generos.module').then((m) => m.GenerosModule),
-  }
+  },
+  {
+    path: 'avaliacoes',
+    loadChildren: () =>
+      import('./features/avaliacoes/avaliacoes.module').then((m) => m.AvaliacoesModule),
+  },
+
 ];
 
 @NgModule({

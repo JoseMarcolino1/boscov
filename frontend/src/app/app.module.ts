@@ -7,14 +7,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
-import { AvaliacaoCreateComponent } from './features/avaliacoes/avaliacao-create/avaliacao-create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    AvaliacaoCreateComponent,
   ],
   imports: [
     BrowserModule,

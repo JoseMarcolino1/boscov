@@ -1,5 +1,18 @@
 <div class="min-h-screen bg-gray-900 text-white p-8">
+
+  <!-- Mover pra fora da grid -->
+  <div class="flex justify-end mb-4">
+    <a
+      *ngIf="isAdmin()"
+      routerLink="/filmes/create"
+      class="bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+    >
+      Novo Filme
+    </a>
+  </div>
+
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- os cards dos filmes -->
     <div
       *ngFor="let filme of filmes"
       class="bg-gray-800 p-4 rounded shadow hover:shadow-lg transition"
@@ -9,20 +22,15 @@
       <p class="text-gray-400 text-sm">
         <strong>Diretor:</strong> {{ filme.diretor || "Desconhecido" }}
       </p>
-
       <p class="text-gray-400 text-sm">
         <strong>Ano:</strong> {{ filme.anoLancamento || "Desconhecido" }}
       </p>
-
       <p class="mt-2">
         <strong>Gêneros:</strong>
         {{ getGeneros(filme) }}
       </p>
-
       <p><strong>Duração:</strong> {{ filme.duracao || "N/A" }} min</p>
-
       <p><strong>Produtora:</strong> {{ filme.produtora || "Desconhecida" }}</p>
-
       <p><strong>Classificação:</strong> {{ filme.classificacao || "N/A" }}</p>
 
       <img
@@ -32,21 +40,33 @@
         class="mt-4 rounded shadow h-64 w-full object-cover"
       />
 
-      <div class="flex justify-end mt-4">
+      <div
+        *ngIf="getMinhaAvaliacaoDoFilme(filme.id)?.comentario"
+        class="mt-2 text-sm italic text-gray-400"
+      >
+        <strong>Seu comentário:</strong>
+        "{{ getMinhaAvaliacaoDoFilme(filme.id)?.comentario }}"
+        <br />
+        <strong>Nota:</strong>
+        {{ getMinhaAvaliacaoDoFilme(filme.id)?.nota }}
+      </div>
+
+      <div class="flex justify-end mt-4 gap-2">
         <a
-          *ngIf="isLoggedIn()"
+          *ngIf="isLoggedIn() && !getMinhaAvaliacaoDoFilme(filme.id)"
           [routerLink]="['/avaliacoes/create', filme.id]"
           class="bg-green-600 text-white p-2 rounded hover:bg-green-700 transition"
         >
           Avaliar
         </a>
+        <a
+          *ngIf="isLoggedIn() && getMinhaAvaliacaoDoFilme(filme.id)"
+          [routerLink]="['/avaliacoes/edit', filme.id]"
+          class="bg-yellow-500 text-white p-2 rounded hover:bg-yellow-600 transition"
+        >
+          Editar Avaliação
+        </a>
       </div>
     </div>
-    <a
-      *ngIf="isAdmin()"
-      routerLink="/filmes/create"
-      class="btn bg-blue-600 text-white p-2 rounded"
-      >Novo Filme</a
-    >
   </div>
 </div>

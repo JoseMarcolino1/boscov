@@ -1,1 +1,32 @@
-<p>avaliacao-create works!</p>
+<div class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="bg-gray-800 p-6 rounded shadow w-full max-w-md">
+    <h2 class="text-xl font-bold mb-4 text-blue-400">Avaliar Filme</h2>
+
+    <div class="mb-3">
+      <label class="block text-sm">Nota (1 a 10):</label>
+      <input
+        type="number"
+        formControlName="nota"
+        min="1"
+        max="10"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label class="block text-sm">Comentário:</label>
+      <textarea
+        formControlName="comentario"
+        class="w-full p-2 rounded bg-gray-700 text-white"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="w-full p-2 bg-green-600 rounded hover:bg-green-700 transition"
+    >
+      Enviar Avaliação
+    </button>
+  </form>
+</div>

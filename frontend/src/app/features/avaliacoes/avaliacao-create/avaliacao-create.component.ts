@@ -35,7 +35,7 @@ export class AvaliacaoCreateComponent {
   
   salvar() {
     if (this.form.valid) {
-      const idUsuario = this.authService.getUserId(); // suponha que você tenha esse método!
+      const idUsuario = this.authService.getUserId(); 
       const input = {
         ...this.form.value,
         idUsuario,

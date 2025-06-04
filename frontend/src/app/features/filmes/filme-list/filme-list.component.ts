@@ -1,15 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FilmeService } from '../filme/filme.service';
 import { FilmeOutput } from 'src/app/interfaces/filme';
+import { AvaliacaoService } from '../../avaliacoes/avaliacao.service';
+import { AvaliacaoOutput } from 'src/app/interfaces/avaliacao';
 
 @Component({
   selector: 'app-filme-list',
   templateUrl: './filme-list.component.html',
 })
-export class FilmeListComponent {
+export class FilmeListComponent implements OnInit {
   filmes: FilmeOutput[] = [];
+  avaliacoesUsuario: AvaliacaoOutput[] = [];
 
-  constructor(private filmeService: FilmeService) {}
+  constructor(
+    private filmeService: FilmeService,
+    private avaliacoesService: AvaliacaoService
+  ) {}
 
   ngOnInit() {
     this.filmeService.getFilmes().subscribe({
@@ -28,6 +34,16 @@ export class FilmeListComponent {
           console.error('URL:', err.url);
           console.error('Response:', err.error);
         }
+      },
+    });
+    console.log('🔎 Buscando avaliações do usuári2222o...');
+    this.avaliacoesService.getMinhasAvaliacoes().subscribe({
+      next: (res) => {
+        console.log('✅ Avaliações do usuário carregadas:', res);
+        this.avaliacoesUsuario = res;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar avaliações:', err);
       },
     });
   }
@@ -52,5 +68,9 @@ export class FilmeListComponent {
 
   isAdmin(): boolean {
     return this.getUserRole() === 'ADMIN';
+  }
+
+  getMinhaAvaliacaoDoFilme(filmeId: number): AvaliacaoOutput | undefined {
+    return this.avaliacoesUsuario.find((a) => a.idFilme === filmeId);
   }
 }

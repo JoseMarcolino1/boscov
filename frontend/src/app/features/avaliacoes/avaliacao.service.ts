@@ -5,10 +5,9 @@ import { environment } from 'src/app/environment';
 import { AvaliacaoInput, AvaliacaoOutput } from 'src/app/interfaces/avaliacao';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AvaliacaoService {
-
   private readonly API = `${environment.apiUrl}/avaliacoes`;
 
   constructor(private http: HttpClient) {}
@@ -18,7 +17,9 @@ export class AvaliacaoService {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
-    return this.http.post<AvaliacaoOutput>(`${this.API}/create`, input, { headers });
+    return this.http.post<AvaliacaoOutput>(`${this.API}/create`, input, {
+      headers,
+    });
   }
 
   getAll(): Observable<AvaliacaoOutput[]> {
@@ -27,5 +28,28 @@ export class AvaliacaoService {
       Authorization: `Bearer ${token}`,
     });
     return this.http.get<AvaliacaoOutput[]>(`${this.API}/all`, { headers });
+  }
+
+  getMinhasAvaliacoes() {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<AvaliacaoOutput[]>(`${this.API}/minhas`, {
+      headers,
+    });
+  }
+
+  editarAvaliacao(input: any) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.put(`${this.API}/avaliacoes/update`, input, { headers });
+  }
+
+  getMinhaAvaliacaoPorFilme(idFilme: number) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.get<AvaliacaoOutput>(
+      `${this.API}/avaliacoes/minha/${idFilme}`,
+      { headers }
+    );
   }
 }
