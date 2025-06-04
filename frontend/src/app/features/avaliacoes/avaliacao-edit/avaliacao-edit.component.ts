@@ -7,7 +7,7 @@ import { AvaliacaoService } from '../avaliacao.service';
 @Component({
   selector: 'app-avaliacao-edit',
   templateUrl: './avaliacao-edit.component.html',
-  styleUrls: ['./avaliacao-edit.component.css']
+  styleUrls: ['./avaliacao-edit.component.css'],
 })
 export class AvaliacaoEditComponent {
   form!: FormGroup;
@@ -23,22 +23,29 @@ export class AvaliacaoEditComponent {
 
   ngOnInit(): void {
     this.idFilme = Number(this.route.snapshot.paramMap.get('idFilme'));
+
+    // Inicialize o form aqui para evitar erro de binding
+    this.form = this.fb.group({
+      nota: [
+        null,
+        [Validators.required, Validators.min(1), Validators.max(10)],
+      ],
+      comentario: [''],
+    });
+
     this.loadAvaliacao();
   }
 
   loadAvaliacao(): void {
     this.avaliacaoService.getMinhaAvaliacaoPorFilme(this.idFilme).subscribe({
       next: (res) => {
-        this.avaliacao = res;
-        this.form = this.fb.group({
-          nota: [this.avaliacao?.nota, [Validators.required, Validators.min(1), Validators.max(10)]],
-          comentario: [this.avaliacao?.comentario, Validators.maxLength(500)]
+        this.form.patchValue({
+          nota: res.nota,
+          comentario: res.comentario,
         });
       },
       error: (err) => {
         console.error('Erro ao buscar avaliação:', err);
-        alert('Erro ao buscar sua avaliação!');
-        this.router.navigate(['/filmes']);
       },
     });
   }
@@ -47,9 +54,9 @@ export class AvaliacaoEditComponent {
     if (this.form.valid) {
       const input = {
         ...this.form.value,
-        idFilme: this.idFilme
+        idFilme: this.idFilme,
       };
-      this.avaliacaoService.editarAvaliacao(input).subscribe({
+      this.avaliacaoService.editarAvaliacao(this.idFilme,input).subscribe({
         next: () => {
           alert('Avaliação atualizada!');
           this.router.navigate(['/filmes']);
@@ -57,7 +64,7 @@ export class AvaliacaoEditComponent {
         error: (err) => {
           console.error('Erro ao atualizar avaliação:', err);
           alert('Erro ao atualizar avaliação!');
-        }
+        },
       });
     }
   }

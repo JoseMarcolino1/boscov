@@ -38,17 +38,17 @@ export class AvaliacaoService {
     });
   }
 
-  editarAvaliacao(input: any) {
+  editarAvaliacao(idFilme: number, input: any) {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.put(`${this.API}/avaliacoes/update`, input, { headers });
+    return this.http.put(`${this.API}/edit/${idFilme}`, input, { headers });
   }
 
   getMinhaAvaliacaoPorFilme(idFilme: number) {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
     return this.http.get<AvaliacaoOutput>(
-      `${this.API}/avaliacoes/minha/${idFilme}`,
+      `${this.API}/minha/${idFilme}`,
       { headers }
     );
   }
