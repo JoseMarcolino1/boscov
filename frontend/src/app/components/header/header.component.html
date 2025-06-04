@@ -1,7 +1,7 @@
 <header class="flex items-center justify-between bg-gray-900 text-white p-4 shadow">
   <h1 class="text-2xl font-bold">🎬 Boscov</h1>
-  <div class="flex items-center space-x-2">
+  <div  *ngIf="isLoggedIn()" class="flex items-center space-x-2">
     <span class="text-2xl text-gray-400">Olá,</span>
-    <span *ngIf="isLoggedIn()" class="text-2xl font-medium">{{ usuarioNome }}</span>
+    <span class="text-2xl font-medium">{{ usuarioNome }}</span>
   </div>
 </header>

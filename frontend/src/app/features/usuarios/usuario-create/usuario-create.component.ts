@@ -24,7 +24,7 @@ export class UsuarioCreateComponent {
       senha: ['', Validators.required],
       apelido: [''],
       dataNascimento: [''],
-      tipoUsuario: ['USER', Validators.required] // default USER
+      tipoUsuario: ['USER', Validators.required] 
     });
   }
 
@@ -34,7 +34,7 @@ export class UsuarioCreateComponent {
         next: (res) => {
           console.log('Usuário cadastrado:', res);
           alert('Usuário criado com sucesso!');
-          this.router.navigate(['/login']); // ou onde você preferir
+          this.router.navigate(['/login']); 
         },
         error: (err) => {
           console.error('Erro ao cadastrar usuário:', err);
