@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@Table(name = "filme")
 public class Filme {
 
     @Id

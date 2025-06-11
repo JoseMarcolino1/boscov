@@ -1,6 +1,7 @@
 package com.boscov.avaliadorFilmes.services;
 
 import com.boscov.avaliadorFilmes.models.Avaliacao;
+import com.boscov.avaliadorFilmes.models.AvaliacaoId;
 import com.boscov.avaliadorFilmes.models.Filme;
 import com.boscov.avaliadorFilmes.models.Usuario;
 import com.boscov.avaliadorFilmes.models.dto.AvaliacaoInput;
@@ -11,6 +12,7 @@ import com.boscov.avaliadorFilmes.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,6 +41,12 @@ public class AvaliacaoService {
         avaliacao.setNota(input.getNota());
         avaliacao.setComentario(input.getComentario());
 
+        avaliacao.setDataCriacao(LocalDateTime.now());
+        avaliacao.setDataAtualizacao(LocalDateTime.now());
+        AvaliacaoId id = new AvaliacaoId();
+        id.setUsuario(usuario.getId());
+        id.setFilme(filme.getId());
+        avaliacao.setId(id);
         Avaliacao salva = avaliacaoRepository.save(avaliacao);
 
         AvaliacaoOutput output = new AvaliacaoOutput();
@@ -48,9 +56,12 @@ public class AvaliacaoService {
         output.setNomeFilme(filme.getNome());
         output.setNota(salva.getNota());
         output.setComentario(salva.getComentario());
+        output.setDataCriacao(salva.getDataCriacao());
+        output.setDataAtualizacao(salva.getDataAtualizacao());
 
         return output;
     }
+
 
     public List<AvaliacaoOutput> listarTodos() {
         return avaliacaoRepository.findAll().stream()
@@ -66,6 +77,8 @@ public class AvaliacaoService {
         output.setNomeFilme(avaliacao.getFilme().getNome());
         output.setNota(avaliacao.getNota());
         output.setComentario(avaliacao.getComentario());
+        output.setDataCriacao(avaliacao.getDataCriacao());
+        output.setDataAtualizacao(avaliacao.getDataAtualizacao());
         return output;
     }
 
@@ -86,17 +99,17 @@ public class AvaliacaoService {
             throw new RuntimeException("Usuário não encontrado.");
         }
 
-        // Busca a avaliação existente
         Avaliacao avaliacaoExistente = avaliacaoRepository.findByUsuarioIdAndFilmeId(usuario.getId(), idFilme)
                 .orElseThrow(() -> new RuntimeException("Avaliação não encontrada para este usuário e filme."));
 
-        // Atualiza os dados
         avaliacaoExistente.setNota(input.getNota());
         avaliacaoExistente.setComentario(input.getComentario());
 
+        // ✅ Atualiza a data de atualização
+        avaliacaoExistente.setDataAtualizacao(LocalDateTime.now());
+
         Avaliacao atualizada = avaliacaoRepository.save(avaliacaoExistente);
 
-        // Mapeia para output
         AvaliacaoOutput output = new AvaliacaoOutput();
         output.setIdUsuario(usuario.getId());
         output.setNomeUsuario(usuario.getNome());
@@ -104,9 +117,12 @@ public class AvaliacaoService {
         output.setNomeFilme(avaliacaoExistente.getFilme().getNome());
         output.setNota(atualizada.getNota());
         output.setComentario(atualizada.getComentario());
+        output.setDataCriacao(atualizada.getDataCriacao());
+        output.setDataAtualizacao(atualizada.getDataAtualizacao());
 
         return output;
     }
+
 
     public AvaliacaoOutput getAvaliacaoDoUsuarioPorFilme(String email, Long idFilme) {
         Usuario usuario = usuarioRepository.findByEmail(email);

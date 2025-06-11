@@ -2,6 +2,8 @@ package com.boscov.avaliadorFilmes.models.dto;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Data
 public class AvaliacaoOutput {
     private Long idUsuario;
@@ -12,4 +14,6 @@ public class AvaliacaoOutput {
 
     private Double nota;
     private String comentario;
+    private LocalDateTime dataCriacao;
+    private LocalDateTime dataAtualizacao;
 }

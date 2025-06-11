@@ -3,6 +3,7 @@ export interface AvaliacaoInput {
   idFilme: number;
   nota: number;
   comentario: string;
+  dataCriacao: string;
 }
 
 export interface AvaliacaoOutput {
@@ -12,4 +13,6 @@ export interface AvaliacaoOutput {
   nomeFilme: string;
   nota: number;
   comentario: string;
+  dataCriacao: string;
+  dataAtualizacao: string;
 }

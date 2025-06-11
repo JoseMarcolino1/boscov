@@ -1,22 +1,36 @@
-<header
-  class="flex items-center justify-between bg-gray-900 text-white p-4 shadow"
->
-  <h1 class="text-2xl font-bold">🎬 Boscov</h1>
+<header class="flex flex-wrap items-center justify-between bg-gray-900 text-white p-4 shadow">
+  <h1 class="text-2xl font-bold w-full sm:w-auto text-center sm:text-left mb-2 sm:mb-0">🎬 Boscov</h1>
 
-  <div class="flex items-center space-x-2">
+  <div class="flex flex-wrap items-center justify-center sm:justify-end gap-2 w-full sm:w-auto">
     <ng-container *ngIf="isLoggedIn(); else loginBtn">
       <span class="text-2xl text-gray-400">Olá,</span>
+
       <button
         (click)="navigateToProfile()"
-        class="ml-2 text-blue-400 font-semibold hover:underline hover:text-blue-600 transition-colors duration-200 cursor-pointer"
+        class="text-blue-400 font-semibold hover:underline hover:text-blue-600 transition-colors duration-200 cursor-pointer"
       >
         <span class="text-2xl">{{ usuarioNome }}</span>
       </button>
 
-      <button (click)="logout()" class="ml-4 bg-red-500 px-3 py-1 rounded">
+      <button
+        routerLink="/filmes"
+        class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition-colors duration-200"
+      >
+        Filmes
+      </button>
+
+      <button
+        routerLink="/avaliacoes"
+        class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded transition-colors duration-200"
+      >
+        Minhas Avaliações
+      </button>
+
+      <button (click)="logout()" class="bg-red-500 px-3 py-1 rounded">
         Sair
       </button>
     </ng-container>
+
     <ng-template #loginBtn>
       <button routerLink="/login" class="bg-blue-600 px-3 py-1 rounded">
         Login

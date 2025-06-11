@@ -4,6 +4,7 @@ import com.boscov.avaliadorFilmes.models.dto.GeneroInput;
 import com.boscov.avaliadorFilmes.models.dto.GeneroOutput;
 import com.boscov.avaliadorFilmes.services.GeneroService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
