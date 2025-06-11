@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GenerosRoutingModule } from './generos-routing.module';
 import { GeneroCreateComponent } from './genero-create/genero-create.component';
+import { SharedModule } from 'src/app/shared/shared/shared.module';
 
 
 @NgModule({
@@ -10,7 +11,8 @@ import { GeneroCreateComponent } from './genero-create/genero-create.component';
   imports: [
     CommonModule,
     GenerosRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
     
   ]
 })

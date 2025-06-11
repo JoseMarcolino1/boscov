@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilmeService } from '../filme/filme.service';
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { GeneroService } from '../../generos/genero.service';
 @Component({
   selector: 'app-filme-create',
   templateUrl: './filme-create.component.html',
-  styleUrls: ['./filme-create.component.css']
+  styleUrls: ['./filme-create.component.css'],
 })
 export class FilmeCreateComponent {
   form!: FormGroup;
@@ -17,7 +17,8 @@ export class FilmeCreateComponent {
     private fb: FormBuilder,
     private filmeService: FilmeService,
     private generoService: GeneroService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -40,6 +41,9 @@ export class FilmeCreateComponent {
   }
 
   salvar() {
+    // marca todos os campos como tocados
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
       this.filmeService.salvarFilme(this.form.value).subscribe({
         next: (res) => {
@@ -51,6 +55,8 @@ export class FilmeCreateComponent {
           alert('Erro ao salvar filme');
         },
       });
+    } else {
+      console.log('Formulário inválido! Mensagens de erro mostradas.');
     }
   }
 }
