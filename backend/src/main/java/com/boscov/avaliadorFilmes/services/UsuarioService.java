@@ -77,6 +77,37 @@ public class UsuarioService {
         return output;
     }
 
+    public UsuarioOutput atualizarUsuarioLogado(String email, UsuarioInput input) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
 
+        usuario.setNome(input.getNome());
+        usuario.setApelido(input.getApelido());
+        usuario.setDataAtualizacao(LocalDateTime.now());
+
+        Usuario atualizado = usuarioRepository.save(usuario);
+
+        UsuarioOutput output = new UsuarioOutput();
+        output.setId(atualizado.getId());
+        output.setNome(atualizado.getNome());
+        output.setEmail(atualizado.getEmail());
+        output.setApelido(atualizado.getApelido());
+        output.setStatus(atualizado.getStatus());
+        output.setDataCriacao(atualizado.getDataCriacao());
+        output.setDataAtualizacao(atualizado.getDataAtualizacao());
+
+        return output;
+    }
+
+
+    public UsuarioOutput buscarPorEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email);
+        if (usuario == null) {
+            throw new RuntimeException("Usuário não encontrado.");
+        }
+        return mapearUsuarioParaOutput(usuario);
+    }
 
 }
