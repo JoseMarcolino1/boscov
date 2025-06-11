@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/auth/auth.guard';
+import { AcessoNegadoComponent } from './features/pages/acesso-negado/acesso-negado.component';
 
 // Aqui vão as rotas principais da aplicação
 const routes: Routes = [
@@ -30,7 +31,9 @@ const routes: Routes = [
   {
     path: 'usuarios',
     loadChildren: () =>
-      import('./features/usuarios/usuario/usuario.module').then((m) => m.UsuarioModule),
+      import('./features/usuarios/usuario/usuario.module').then(
+        (m) => m.UsuarioModule
+      ),
   },
   {
     path: 'generos',
@@ -40,9 +43,14 @@ const routes: Routes = [
   {
     path: 'avaliacoes',
     loadChildren: () =>
-      import('./features/avaliacoes/avaliacoes.module').then((m) => m.AvaliacoesModule),
+      import('./features/avaliacoes/avaliacoes.module').then(
+        (m) => m.AvaliacoesModule
+      ),
   },
-
+  {
+    path: 'acesso-negado',
+    component: AcessoNegadoComponent,
+  },
 ];
 
 @NgModule({

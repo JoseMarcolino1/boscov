@@ -7,12 +7,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
+import { AcessoNegadoComponent } from './features/pages/acesso-negado/acesso-negado.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    AcessoNegadoComponent,
   ],
   imports: [
     BrowserModule,

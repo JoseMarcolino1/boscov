@@ -73,8 +73,11 @@ export class AuthService {
     const token = this.getToken();
     if (!token) return false;
     const decoded = this.jwtHelper.decodeToken(token);
-    console.log('Decoded Token:', decoded); 
-
     return decoded?.role === 'ADMIN';
+  }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return token != null && !this.jwtHelper.isTokenExpired(token);
   }
 }

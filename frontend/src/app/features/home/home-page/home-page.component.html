@@ -1,7 +1,26 @@
-<div class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-8">
+<div
+  class="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-8"
+>
   <h1 class="text-4xl font-bold mb-4">🎬 Bem-vindo ao Boscov!</h1>
   <p class="text-gray-400 mb-8 text-center max-w-xl">
-    Explore os filmes, veja as avaliações e compartilhe sua opinião. Crie sua conta para participar!
+    Explore os filmes, veja as avaliações e compartilhe sua opinião. Crie sua
+    conta para participar!
   </p>
-  <a routerLink="/filmes" class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition">Crie sua Conta</a>
+  <ng-container *ngIf="isLoggedIn(); else criarConta">
+    <a
+      routerLink="/filmes"
+      class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition"
+    >
+      Ver Filmes
+    </a>
+  </ng-container>
+
+  <ng-template #criarConta>
+    <a
+      routerLink="/usuarios/register"
+      class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition"
+    >
+      Crie sua Conta
+    </a>
+  </ng-template>
 </div>

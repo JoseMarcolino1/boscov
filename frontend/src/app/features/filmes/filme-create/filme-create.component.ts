@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FilmeService } from '../filme/filme.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,6 @@ export class FilmeCreateComponent {
     private filmeService: FilmeService,
     private generoService: GeneroService,
     private router: Router,
-    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -33,7 +32,6 @@ export class FilmeCreateComponent {
       poster: [''],
     });
 
-    // Carrega gêneros do back
     this.generoService.getGeneros().subscribe({
       next: (res) => (this.generos = res),
       error: (err) => console.error('Erro ao carregar gêneros:', err),
@@ -41,7 +39,6 @@ export class FilmeCreateComponent {
   }
 
   salvar() {
-    // marca todos os campos como tocados
     this.form.markAllAsTouched();
 
     if (this.form.valid) {

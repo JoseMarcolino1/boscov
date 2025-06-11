@@ -10,19 +10,23 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class HeaderComponent implements OnInit {
   usuarioNome: string | null = '';
 
-  constructor(private authService: AuthService, private router : Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    this.authService.getUsuarioLogado().subscribe({
-      next: (usuario) => {
-        this.usuarioNome = usuario.nome;
-        localStorage.setItem('usuarioApelido', usuario.apelido || '');
-      },
-      error: (err) => {
-        console.error('Erro ao obter usuário logado:', err);
-        this.usuarioNome = 'Usuário';
-      },
-    });
+    if (this.isLoggedIn()) {
+      this.authService.getUsuarioLogado().subscribe({
+        next: (usuario) => {
+          this.usuarioNome = usuario.nome;
+          localStorage.setItem('usuarioApelido', usuario.apelido || '');
+        },
+        error: (err) => {
+          console.error('Erro ao obter usuário logado:', err);
+          this.usuarioNome = null;
+        },
+      });
+    } else {
+      this.usuarioNome = null;
+    }
   }
 
   logout() {
@@ -30,7 +34,7 @@ export class HeaderComponent implements OnInit {
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token'); 
+    return !!localStorage.getItem('token');
   }
 
   navigateToProfile() {
@@ -41,5 +45,12 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-
+  isAdmin(): boolean {
+    const admin = this.authService.isAdmin();
+    if (admin) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }
