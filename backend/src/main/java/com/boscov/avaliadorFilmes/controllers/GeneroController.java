@@ -18,6 +18,7 @@ public class GeneroController {
         this.generoService = generoService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<GeneroOutput> criar(@RequestBody GeneroInput input) {
         return ResponseEntity.ok(generoService.salvar(input));
