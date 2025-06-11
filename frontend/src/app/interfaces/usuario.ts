@@ -7,3 +7,5 @@ export interface UsuarioOutput {
   dataCriacao: string; 
   dataAtualizacao: string;
 }
+
+
