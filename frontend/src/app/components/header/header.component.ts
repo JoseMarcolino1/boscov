@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
@@ -9,7 +10,7 @@ import { AuthService } from 'src/app/core/auth/auth.service';
 export class HeaderComponent implements OnInit {
   usuarioNome: string | null = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router : Router) {}
 
   ngOnInit(): void {
     this.authService.getUsuarioLogado().subscribe({
@@ -30,6 +31,14 @@ export class HeaderComponent implements OnInit {
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token'); 
+  }
+
+  navigateToProfile() {
+    if (this.isLoggedIn()) {
+      this.router.navigate(['/perfil']);
+    } else {
+      this.router.navigate(['/login']);
+    }
   }
 
 

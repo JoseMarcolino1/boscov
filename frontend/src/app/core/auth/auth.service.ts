@@ -68,4 +68,13 @@ export class AuthService {
     console.log('Decoded Token:', decoded);
     return decoded?.id || null;
   }
+
+  isAdmin(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    const decoded = this.jwtHelper.decodeToken(token);
+    console.log('Decoded Token:', decoded); 
+
+    return decoded?.role === 'ADMIN';
+  }
 }

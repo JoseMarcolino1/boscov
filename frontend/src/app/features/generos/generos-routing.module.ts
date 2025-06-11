@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { GeneroCreateComponent } from './genero-create/genero-create.component';
-import { AuthGuard } from 'src/app/core/auth/auth.guard';
+import { AdminGuard } from 'src/app/core/auth/admin.guard';
 
 const routes: Routes = [
   {
     path: 'create',
     component: GeneroCreateComponent,
-    canActivate: [AuthGuard],
-    data:{role: ['ADMIN']},
+    canActivate: [AdminGuard]
   }
 ];
 
